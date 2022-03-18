@@ -488,6 +488,10 @@ But first please open that file in the tool they ask us to perform the decryptio
 
 For this remote command injection attack u need to perform the things a
 
+
+Snow.exe -C -p “given_password” file_name
+
+
 | dir c:\ with this command u can see the pin.txt file. But to read the content from this try this command
 | dir c:\ "pin.txt" or this command ! Take pin.txt
 

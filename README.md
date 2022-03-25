@@ -97,7 +97,7 @@ Run
 
 Above material was gathered for preparation, but most of the  content is just useless,So don’t take this seriously, rather you should make your own notes for ILABS videos on youtube.The Questions are interlinked so go with the flow and keep up with smooth pace. During the exam I have searched many things and even went through the commands manual for finding particular flags and tools to find the answer, so don’t worry if anything is missing in your custom cheatsheet as this is an open book exam. 
 
-Tough questions I had in the exam.
+#### Tough questions I had in the exam.
 
 An FTP site is hosted on a machine in a network. Obtain the file “flag.txt” by cracking the credentials of the FTP server and determine the content in this file.
 

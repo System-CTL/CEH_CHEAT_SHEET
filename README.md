@@ -51,7 +51,7 @@ Snow.exe -C -p “given_password” file_name
 
 | dir c:\ with this command u can see the pin.txt file. But to read the content from this try this command | dir c:\ "pin.txt" or this command ! Take pin.txt
 
-## DVWA - You can change the severity from impossible to easy.
+## DVWA 
 
 ### WINDOWS - COMMAND INJECTION
 
@@ -153,3 +153,5 @@ grep -B 5 open mysql
 
 Hydra -l james -P given_wordlist ftp://target
 ```
+
+##DVWA - You can change the severity from impossible to easy.

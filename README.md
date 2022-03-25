@@ -51,7 +51,7 @@ Snow.exe -C -p “given_password” file_name
 
 | dir c:\ with this command u can see the pin.txt file. But to read the content from this try this command | dir c:\ "pin.txt" or this command ! Take pin.txt
 
-##DVWA 
+## DVWA 
 
 WINDOWS - COMMAND INJECTION
 
@@ -93,7 +93,7 @@ Run
 
 
 
-#My experience - 2022 March:
+# My experience - 2022 March:
 
 Above material was gathered for preparation, but most of the  content is just useless,So don’t take this seriously, rather you should make your own notes for ILABS videos on youtube. During the exam I have searched many things and even went through the commands manual for finding particular flags and tools to find the answer, so don’t worry if anything is missing in your custom cheatsheet as this is an open book exam. 
 
@@ -105,7 +105,7 @@ Ftp server was bruteforce easily but the file would not be retrieved as error st
 An important file has been hidden in the Server 2019 machine in the directory mentioned below. You are an ethical hacker working with a company. You have been assigned the task to retrieve the file “SECRET.txt” using a backdoor that was installed in the server. Enter the secret number hidden in the file. Path: C:\Users\Administrator\Documents\Findme
 No clue about this, like where to find the server in the network.
 
-#Note: You can download and install tools If you'll does'nt find required tool on given machine, you can find tools from CEH-Tool folder on windows machine as well.
+# Note: You can download and install tools If you'll does'nt find required tool on given machine, you can find tools from CEH-Tool folder on windows machine as well.
 
 ##Tools I used .
 Veracrypt 
@@ -122,7 +122,7 @@ Winscp
 OWASP ZAP
 RDP
 
-##Commands:
+## Commands:
 ```
 Net  user
 Snow.exe -C -p “given_password” file_name

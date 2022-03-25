@@ -154,4 +154,4 @@ grep -B 5 open mysql
 Hydra -l james -P given_wordlist ftp://target
 ```
 
-##DVWA - You can change the severity from impossible to easy.
+## DVWA - You can change the severity from impossible to easy.

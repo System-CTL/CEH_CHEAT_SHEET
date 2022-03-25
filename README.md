@@ -158,4 +158,4 @@ Hydra -l james -P given_wordlist ftp://target
 
 ## DVWA - You can change the severity from impossible to easy.
 
-#ITS EASY - IA you will pass the EXAM.
+# ITS EASY - IA you will pass the EXAM.

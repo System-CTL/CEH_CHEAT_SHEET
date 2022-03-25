@@ -100,10 +100,12 @@ Above material was gathered for preparation, but most of the  content is just us
 Tough questions I had in the exam.
 
 An FTP site is hosted on a machine in a network. Obtain the file “flag.txt” by cracking the credentials of the FTP server and determine the content in this file.
-Ftp server was bruteforce easily but the file would not be retrieved as error stated that “Access Denied”. 
+
+_Ftp server was bruteforce easily but the file would not be retrieved as error stated that “Access Denied”._ 
 
 An important file has been hidden in the Server 2019 machine in the directory mentioned below. You are an ethical hacker working with a company. You have been assigned the task to retrieve the file “SECRET.txt” using a backdoor that was installed in the server. Enter the secret number hidden in the file. Path: C:\Users\Administrator\Documents\Findme
-No clue about this, like where to find the server in the network.
+
+_No clue about this, like where to find the server in the network._
 
 # Note: You can download and install tools If you'll does'nt find required tool on given machine, you can find tools from folder CEH-Tool on given windows machine as well.
 

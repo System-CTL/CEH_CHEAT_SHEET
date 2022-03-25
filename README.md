@@ -105,9 +105,10 @@ Ftp server was bruteforce easily but the file would not be retrieved as error st
 An important file has been hidden in the Server 2019 machine in the directory mentioned below. You are an ethical hacker working with a company. You have been assigned the task to retrieve the file “SECRET.txt” using a backdoor that was installed in the server. Enter the secret number hidden in the file. Path: C:\Users\Administrator\Documents\Findme
 No clue about this, like where to find the server in the network.
 
-# Note: You can download and install tools If you'll does'nt find required tool on given machine, you can find tools from CEH-Tool folder on windows machine as well.
+# Note: You can download and install tools If you'll does'nt find required tool on given machine, you can find tools from folder CEH-Tool on given windows machine as well.
 
-##Tools I used .
+## Tools I used .
+```
 Veracrypt 
 Cryptool
 Snow
@@ -121,6 +122,7 @@ Wireshark
 Winscp
 OWASP ZAP
 RDP
+```
 
 ## Commands:
 ```
